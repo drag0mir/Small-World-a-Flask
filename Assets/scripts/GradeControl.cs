@@ -19,7 +19,7 @@ public class GradeControl : MonoBehaviour {
     {
         if (other.gameObject.tag != "falled")
         {
-            Debug.LogWarning("Grade colision on " + other.tag + " => "+ other.gameObject.name);
+            
             hand.LevelUp(level);
             gameObject.active = false;
 

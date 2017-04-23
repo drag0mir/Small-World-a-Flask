@@ -80,8 +80,10 @@
   <ItemGroup>
     <Compile Include="Assets\scripts\BallsChangeTag.cs" />
     <Compile Include="Assets\scripts\GameControl.cs" />
+    <Compile Include="Assets\scripts\GameStarter.cs" />
     <Compile Include="Assets\scripts\GradeControl.cs" />
     <Compile Include="Assets\scripts\UIActions.cs" />
+    <Compile Include="Assets\scripts\borders.cs" />
     <Compile Include="Assets\scripts\flaskControl.cs" />
     <Compile Include="Assets\scripts\handControl.cs" />
     <Compile Include="Assets\scripts\joinholder.cs" />

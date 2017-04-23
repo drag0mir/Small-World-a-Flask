@@ -45,7 +45,8 @@ public class handControl : MonoBehaviour {
     bool ballNotChanges = true;
     int i = 0;
     float timerChanges = 0.0f;
-
+    Direction? moving;
+    int score = 10;
 	// Use this for initialization
 	void Start () {
         audio = this.GetComponent<AudioSource>();
@@ -77,21 +78,24 @@ public class handControl : MonoBehaviour {
         }
 
         if (Input.GetButtonDown("Num1"))
+
         {
-           // Debug.LogWarning(" => key press =>" + ballNotChanges);
-            
+            score = 10;
             ChangeBall(BallPrefab1);
         }
         if (Input.GetButtonDown("Num2"))
         {
+            score = 20;
             ChangeBall(BallPrefab2);
         }
         if (Input.GetButtonDown("Num3"))
         {
+            score = 30;
             ChangeBall(BallPrefab3);
         }
         if (Input.GetButtonDown("Num4"))
         {
+            score = 50;
             ChangeBall(BallPrefab4);
         }
     }
@@ -104,7 +108,7 @@ public class handControl : MonoBehaviour {
         }
         onTimer();
     }
-    /*void*/
+ 
     void  ChangeBall(GameObject prefab)
     {
 
@@ -149,16 +153,26 @@ public class handControl : MonoBehaviour {
 
     void AddScore()
     {
-        int score = 10;//TODO: переключить на маппинг из Game
+        
+       //TODO: переключить на маппинг из Game
         ExecuteEvents.Execute<UIActions>(Game.gameObject, null, (x, y) => x.UIAction(new UIMessageAction() { TypeMessage = UIMessageAction.type.ADD_SCORE,paramInt=score }));
     }
 
-    void MoveHand(Direction dir)
+   public void MoveHand(Direction dir)
     {
+        //Debug.LogWarning("MoveHand  => " + dir);
         audio.PlayOneShot(MovingAudio);
         Vector3 newPosition = transform.position + (dir==Direction.LEFT ? Vector3.left : Vector3.right)*step;
         transform.position=newPosition;
     }
+   public void MoveHand10(Direction dir)
+   {
+       Debug.LogWarning("MoveHand 10 => " + dir);
+       audio.PlayOneShot(MovingAudio);
+       Vector3 newPosition = transform.position + (dir == Direction.LEFT ? Vector3.left : Vector3.right) * step*5;
+       transform.position = newPosition;
+   }
+
     void DestroyBall()
     {
         if (ball == null)
@@ -220,4 +234,6 @@ public class handControl : MonoBehaviour {
             ColdDown.fillAmount = timer / BackTime;
         }
     }
+
+    public bool isMoving { get; set; }
 }
