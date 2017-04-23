@@ -40,9 +40,12 @@ public class GameControl : MonoBehaviour, UIActions
                 break;
             case UIMessageAction.type.GAME_OVER:
                 {
-                    isGameStop = true;
-                    ModalText.text = ModalText.text + score.ToString();
-                    ModalWindow.SetActive(true);
+                    if (!isGameStop)
+                    {
+                        isGameStop = true;
+                        ModalText.text = ModalText.text + score.ToString();
+                        ModalWindow.SetActive(true);
+                    }
                 }
                 break;
         }
@@ -56,5 +59,14 @@ public class GameControl : MonoBehaviour, UIActions
     "&amp;url=" + WWW.EscapeURL("\t") +
     "&amp;related=" + WWW.EscapeURL("\t") +
     "&amp;lang=" + WWW.EscapeURL("en"));
+    }
+
+    public void GoReset()
+    {
+        Application.LoadLevel("game");
+    }
+    public void GoHome()
+    {
+        Application.LoadLevel("title");
     }
 }

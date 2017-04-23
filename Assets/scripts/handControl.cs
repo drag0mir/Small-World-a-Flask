@@ -17,7 +17,12 @@ public class handControl : MonoBehaviour {
     GameObject ball;
 
     GameObject BallPrefab;
-
+    AudioSource audio;
+    public AudioClip MovingAudio;
+    public AudioClip DropingAudio;
+    public AudioClip SetNewAudio;
+    public AudioClip ChangeAudio;
+    public AudioClip LevelUpAudio;
     public Image ColdDown;
     public float CodldownTime = 2.0f;
     public float BackTime = 5.0f;
@@ -43,6 +48,7 @@ public class handControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        audio = this.GetComponent<AudioSource>();
         transform = gameObject.transform;
         BallPrefab = BallPrefab1;
         SetNewBall();
@@ -72,7 +78,7 @@ public class handControl : MonoBehaviour {
 
         if (Input.GetButtonDown("Num1"))
         {
-            Debug.LogWarning(" => key press =>" + ballNotChanges);
+           // Debug.LogWarning(" => key press =>" + ballNotChanges);
             
             ChangeBall(BallPrefab1);
         }
@@ -107,6 +113,7 @@ public class handControl : MonoBehaviour {
 
         if (ballNotChanges/* && timerChanges <= 0.0f*/)
         {
+            audio.PlayOneShot(ChangeAudio);
           //  timerChanges = 0.3f;
             ballNotChanges = false;
             BallPrefab = prefab;
@@ -148,6 +155,7 @@ public class handControl : MonoBehaviour {
 
     void MoveHand(Direction dir)
     {
+        audio.PlayOneShot(MovingAudio);
         Vector3 newPosition = transform.position + (dir==Direction.LEFT ? Vector3.left : Vector3.right)*step;
         transform.position=newPosition;
     }
@@ -162,6 +170,7 @@ public class handControl : MonoBehaviour {
     {
         if (ball != null)
             return;
+        audio.PlayOneShot(SetNewAudio);
         GameObject b =  GameObject.Instantiate(BallPrefab);
         b.transform.tag = "falled";
         b.transform.name = "ball_" + i;
@@ -172,11 +181,12 @@ public class handControl : MonoBehaviour {
         b.transform.SetParent(point.transform); //TODO: попробовать FixedJoin2d
         b.transform.localPosition = Vector3.zero;
         ball = b;
-        Debug.LogWarning(" => set end =>" + ball.name);
+        
     }
 
    public  void LevelUp(int level)
     {
+        audio.PlayOneShot(LevelUpAudio);
         ball.transform.tag = "falled";
         Vector3 newPosition = transform.position + Vector3.up * 0.6f;
         transform.position = newPosition;
